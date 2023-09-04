@@ -14,5 +14,4 @@ dependencyResolutionManagement {
 }
 
 rootProject.name = "SunnyWeather"
-include(":app")
- 
+include(":app", ":MyCommonLib")
