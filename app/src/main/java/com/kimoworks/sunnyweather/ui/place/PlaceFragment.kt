@@ -1,5 +1,6 @@
 package com.kimoworks.sunnyweather.ui.place
 
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,14 +12,28 @@ import com.example.mycommonlib.base.BaseBindingFragment
 import com.example.mycommonlib.utils.ToastUtils
 import com.kimoworks.sunnyweather.SunnyWeatherApplication
 import com.kimoworks.sunnyweather.databinding.FragmentPlaceBinding
+import com.kimoworks.sunnyweather.ui.weather.WeatherActivity
 
 class PlaceFragment : BaseBindingFragment<FragmentPlaceBinding>() {
 
-    val viewModel by lazy { ViewModelProvider(this).get(PlaceViewModel::class.java) }
+    val viewModel by lazy { ViewModelProvider(this)[PlaceViewModel::class.java] }
 
     private lateinit var adapter: PlaceAdapter
     override fun initView(view: View) {
+
         adapter = PlaceAdapter(this, viewModel.placeList)
+
+        if (viewModel.isPlaceSaved()) {
+            val place = viewModel.getSavedPlace()
+            val intent = Intent(context, WeatherActivity::class.java).apply {
+                putExtra("location_lng", place.location.lng)
+                putExtra("location_lat", place.location.lat)
+                putExtra("place_name", place.name)
+            }
+            startActivity(intent)
+            activity?.finish()
+            return
+        }
         val layoutManager = LinearLayoutManager(activity)
         binding.apply {
             recyclerView.layoutManager = layoutManager
@@ -49,6 +64,8 @@ class PlaceFragment : BaseBindingFragment<FragmentPlaceBinding>() {
                 }
             }
         }
+
+
     }
 
     override fun getViewBinding(inflater: LayoutInflater, container: ViewGroup?) = FragmentPlaceBinding.inflate(inflater, container, false)

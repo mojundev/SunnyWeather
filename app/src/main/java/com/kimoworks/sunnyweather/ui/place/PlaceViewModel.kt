@@ -3,7 +3,7 @@ package com.kimoworks.sunnyweather.ui.place
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.*
-import com.kimoworks.sunnyweather.logic.model.Place
+import com.kimoworks.sunnyweather.logic.model.PlaceResponse.Place
 import com.kimoworks.sunnyweather.logic.network.Repository
 
 class PlaceViewModel : ViewModel() {
@@ -19,5 +19,9 @@ class PlaceViewModel : ViewModel() {
     fun searchPlaces(query: String) {
         searchLiveData.value = query
     }
+
+    fun savePlace(place: Place) = Repository.savePlace(place)
+    fun getSavedPlace() = Repository.getSavedPlace()
+    fun isPlaceSaved() = Repository.isPlaceSaved()
 
 }

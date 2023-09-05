@@ -6,4 +6,8 @@ object SunnyWeatherNetwork {
         ServiceCreator.create<PlaceService>()
     }
 
+    val weatherService by lazy {
+        ServiceCreator.create<WeatherService>()
+    }
+
 }
