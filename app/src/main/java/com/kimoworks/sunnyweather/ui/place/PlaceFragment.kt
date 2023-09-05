@@ -10,6 +10,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.mycommonlib.base.BaseBindingFragment
 import com.example.mycommonlib.utils.ToastUtils
+import com.kimoworks.sunnyweather.MainActivity
 import com.kimoworks.sunnyweather.SunnyWeatherApplication
 import com.kimoworks.sunnyweather.databinding.FragmentPlaceBinding
 import com.kimoworks.sunnyweather.ui.weather.WeatherActivity
@@ -23,7 +24,7 @@ class PlaceFragment : BaseBindingFragment<FragmentPlaceBinding>() {
 
         adapter = PlaceAdapter(this, viewModel.placeList)
 
-        if (viewModel.isPlaceSaved()) {
+        if (activity is MainActivity && viewModel.isPlaceSaved()) {
             val place = viewModel.getSavedPlace()
             val intent = Intent(context, WeatherActivity::class.java).apply {
                 putExtra("location_lng", place.location.lng)
